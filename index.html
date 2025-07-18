@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhythm Beats Dance Academy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      overflow-x: hidden;
+    }
+    header {
+      background: #1c1c1c;
+      padding: 20px;
+      text-align: center;
+      font-size: 2em;
+      color: #ff66c4;
+      box-shadow: 0 0 20px #00c2ff;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #111;
+      padding: 10px;
+      gap: 30px;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #ff66c4;
+    }
+    section {
+      padding: 40px;
+      text-align: center;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #111;
+      color: #aaa;
+    }
+    #login-form, #gallery-form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: 20px auto;
+      box-shadow: 0 0 20px #00c2ff;
+    }
+    input[type="text"], input[type="email"], input[type="file"] {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background: #ff66c4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    input[type="submit"]:hover {
+      background: #e60073;
+    }
+    .gallery img {
+      width: 200px;
+      margin: 10px;
+      border: 3px solid #ff66c4;
+      border-radius: 10px;
+    }
+    .signature {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      font-size: 0.9em;
+      font-style: italic;
+      font-weight: bold;
+      color: white;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div class="signature">developed by DEBAJYOTI BASU</div>
+
+  <header>Welcome to Rhythm Beats Dance Academy</header>
+
+  <section id="login">
+    <h2>🎭 Login to Join the Celebration</h2>
+    <form id="login-form" onsubmit="event.preventDefault(); showHome()">
+      <input type="text" id="name" placeholder="Full Name" required><br>
+      <input type="text" placeholder="Address"><br>
+      <input type="text" placeholder="Phone Number"><br>
+      <input type="email" placeholder="Email ID (optional)"><br>
+      <input type="submit" value="Enter">
+    </form>
+  </section>
+
+  <nav id="main-nav" style="display:none">
+    <a href="#home">Home</a>
+    <a href="#details">Event</a>
+    <a href="#gallery">Gallery</a>
+  </nav>
+
+  <section id="home" style="display:none">
+    <h2>Welcome <span id="username"></span> 🎉</h2>
+    <p>We are thrilled to invite you to our grand annual Dance Competition. Witness electrifying performances and showcase your moves!</p>
+  </section>
+
+  <section id="details" style="display:none">
+    <h2>📅 Event Details</h2>
+    <p><strong>Date:</strong> 24th August 2025</p>
+    <p><strong>Time:</strong> 5:00 PM onwards</p>
+    <p><strong>Venue:</strong> Grand Auditorium, City Center</p>
+    <p><strong>Ticket Price:</strong> ₹250</p>
+    <p><strong>Pay via UPI:</strong> <code>dancefest@upi</code></p>
+    <p>👇 Scan this QR code to book your ticket 👇</p>
+    <img src="g-multi_1481529161.png" alt="UPI QR Code" style="width: 240px; border: 4px solid #00c2ff; border-radius: 15px; box-shadow: 0 0 25px #ff00cc, 0 0 40px #00c2ff;">
+    <p style="font-style: italic; margin-top: 20px; font-size: 0.9em; color: #ddd;">After payment, your entry will be confirmed automatically.</p>
+  </section>
+
+  <section id="gallery" style="display:none">
+    <h2>📸 Gallery</h2>
+    <div class="gallery" id="gallery-display"></div>
+    <form id="gallery-form" onsubmit="event.preventDefault(); uploadPhoto()">
+      <input type="password" id="upload-pass" placeholder="Enter upload password"><br>
+      <input type="file" id="photo" accept="image/*"><br>
+      <input type="submit" value="Upload">
+    </form>
+  </section>
+
+  <footer>
+    &copy; 2025 Rhythm Beats Dance Academy | All rights reserved
+  </footer>
+
+  <script>
+    function showHome() {
+      const name = document.getElementById("name").value;
+      document.getElementById("username").innerText = name;
+      document.getElementById("login").style.display = "none";
+      document.getElementById("home").style.display = "block";
+      document.getElementById("details").style.display = "block";
+      document.getElementById("gallery").style.display = "block";
+      document.getElementById("main-nav").style.display = "flex";
+    }
+
+    function uploadPhoto() {
+      const pass = document.getElementById("upload-pass").value;
+      const fileInput = document.getElementById("photo");
+      if (pass !== "909099") {
+        alert("Incorrect password!");
+        return;
+      }
+      if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+          document.getElementById("gallery-display").appendChild(img);
+        }
+        reader.readAsDataURL(fileInput.files[0]);
+      }
+    }
+  </script>
+</body>
+</html>
